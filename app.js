@@ -2,7 +2,9 @@ const express = require('express')
 const MongoClient = require('mongodb').MongoClient
 
 const getFilterParams = require('./middlewares/getFilterParams')
+
 const getRouterRestaurants = require('./routes/restaurants')
+const getRouterRestaurant = require('./routes/restaurant')
 
 const app = express()
 
@@ -14,6 +16,7 @@ MongoClient.connect(url)
 
     app.use( getFilterParams )
     app.use( '/restaurants', getRouterRestaurants(db) )
+    app.use( '/restaurant', getRouterRestaurant(db) )
 
     // app.use( '/restaurants',
     //   (req, res, next) => {
@@ -28,7 +31,7 @@ MongoClient.connect(url)
     //   getRouterRestaurants(db)
     //)
 
-    // app.use( '/restaurant', getRouterRestaurant(db) )
+
 
   })
 
