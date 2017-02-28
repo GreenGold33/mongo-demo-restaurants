@@ -15,6 +15,21 @@ MongoClient.connect(url)
     app.use( getFilterParams )
     app.use( '/restaurants', getRouterRestaurants(db) )
 
+    // app.use( '/restaurants',
+    //   (req, res, next) => {
+    //     const { key } = req.query;
+    //     if ( key === '12345') {
+    //       next()
+    //     }
+    //     else {
+    //       res.send(`you don't have permissions!`)
+    //     }
+    //   },
+    //   getRouterRestaurants(db)
+    //)
+
+    // app.use( '/restaurant', getRouterRestaurant(db) )
+
   })
 
 app.listen(PORT, () => console.log(`🚀  Magic happens at PORT ${PORT}...`))
