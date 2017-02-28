@@ -1,9 +1,10 @@
 module.exports = (db, req,res) => {
 
+  const { borough } = req.params
   const { limit, skipResults, projection } = req
 
   db.collection('restaurants')
-    .find( {}, projection )
+    .find({ borough }, projection )
     .limit( limit )
     .skip( skipResults )
     .toArray( (err, aRestaurants) => {
@@ -11,16 +12,3 @@ module.exports = (db, req,res) => {
     })
 
 }
-
-/*
-/restaurants
-
-limit=10
-skipResults=0
-
-/restaurants?limit=30&page=2
-
-limit=30
-skipResults=0
-
-*/

@@ -2,7 +2,7 @@ const express = require('express')
 const MongoClient = require('mongodb').MongoClient
 
 const getFilterParams = require('./middlewares/getFilterParams')
-const getRestaurants = require('./getRestaurants')
+const getRouterRestaurants = require('./routes/restaurants')
 
 const app = express()
 
@@ -13,25 +13,8 @@ MongoClient.connect(url)
   .then ( db => {
 
     app.use( getFilterParams )
-
-    app.get('/restaurants', getRestaurants.bind(null, db) )
-
-    app.get('/restaurants/borough/:borough', (req,res) => {
-
-      const { borough } = req.params
-      const { limit, skipResults } = req
-
-      db.collection('restaurants')
-        .find({ borough })
-        .limit( limit )
-        .skip( skipResults )
-        .toArray( (err, aRestaurants) => {
-            res.json(aRestaurants)
-        })
-
-    })
-
+    app.use( '/restaurants', getRouterRestaurants(db) )
 
   })
 
-app.listen(PORT, () => console.log(`🚀 Magic happens at PORT ${PORT}...`))
+app.listen(PORT, () => console.log(`🚀  Magic happens at PORT ${PORT}...`))
